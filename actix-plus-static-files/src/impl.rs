@@ -102,11 +102,7 @@ impl Deref for ResourceFiles {
 
 impl HttpServiceFactory for ResourceFiles {
     fn register(self, config: &mut AppService) {
-        let rdef = if config.is_root() {
-            ResourceDef::root_prefix(&self.path)
-        } else {
-            ResourceDef::prefix(&self.path)
-        };
+        let rdef = ResourceDef::root_prefix(self.path.trim_end_matches('/'));
         config.register_service(rdef, None, self, None)
     }
 }
